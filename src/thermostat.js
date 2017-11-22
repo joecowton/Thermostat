@@ -35,5 +35,14 @@ Thermostat.prototype = {
   },
   reset: function() {
     this.temperature = StartingTemp;
+  },
+  checkUsage: function() {
+    if (this.temperature < 18){
+      return 'low-usage';
+    }else if (this.temperature > 25){
+      return 'high-usage';
+    }else{
+    return 'medium-usage';
+    }
   }
 };
