@@ -26,14 +26,15 @@ Thermostat.prototype = {
     }
   },
   switch: function() {
-    this.powerSave = !this.powerSave
     if (this.powersave === true) {
+      this.powerSave = !this.powerSave
       MAX = maxSaveTemp;
     } else {
       MAX = maxTemp;
+      this.resets();
     }
   },
-  reset: function() {
+  resets: function() {
     this.temperature = StartingTemp;
   },
   checkUsage: function() {
