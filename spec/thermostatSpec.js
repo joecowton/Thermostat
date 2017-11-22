@@ -26,9 +26,21 @@ describe('thermostat', function() {
     }).toThrow("Temperature can't go below 10");
   });
   it ('should switch to max 25 degrees in power saving mode', function() {
+    thermostat.temperature = 25;
+    expect(function() {thermostat.up();
+    }).toThrow('Max temperature is exceeded');
+  });
+
+  it ('should switch to max 32 degrees in power saving mode', function() {
     thermostat.temperature = 32;
     thermostat.switch();
     expect(function() {thermostat.up();
     }).toThrow('Max temperature is exceeded');
+  });
+
+  it ('should reset the temperature to 20', function() {
+    thermostat.temperature = 24;
+    thermostat.reset();
+    expect(thermostat.temperature).toEqual(20);
   });
 });
