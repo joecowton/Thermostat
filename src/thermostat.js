@@ -25,24 +25,22 @@ Thermostat.prototype = {
       this.temperature -= 1
     }
   },
+  resets: function () {
+    this.temperature = StartingTemp
+  },
   switch: function () {
     this.powerSave = !this.powerSave
     if (this.powerSave === true) {
       MAX = maxSaveTemp
+      if (this.temperature > 25)
+        this.temperature = maxSaveTemp
     } else {
       MAX = maxTemp
     }
   },
-  resets: function () {
-    this.temperature = StartingTemp
-  },
   checkUsage: function () {
-    if (this.temperature < 18) {
-      return 'low-usage'
-    } else if (this.temperature > 25) {
-      return 'high-usage'
-    } else {
-      return 'medium-usage'
-    }
+    if (this.temperature < 18) return 0;
+    if (this.temperature < 25) return 1;
+    if (this.temperature >= 25)return 2;
   }
 }
