@@ -2,6 +2,7 @@
 $(document).ready(function () {
   var thermostat = new Thermostat()
   function updateTemp () {
+
     $('#temperature').text(thermostat.temperature);
     if(thermostat.checkUsage() === 0){
       $('#temperature').css('color', 'green')
@@ -11,8 +12,12 @@ $(document).ready(function () {
       $('#temperature').css('color', 'red')
     }
   }
+
+
   updateTemp();
   switchColor();
+
+
   $('#temperature-up').on('click', function () {
     thermostat.up()
     updateTemp()
@@ -26,9 +31,6 @@ $(document).ready(function () {
     updateTemp()
   })
   $('#powersaving-switch').on('click', function() {
-     // $(".switch").toggle()
-    // $('#powersaving-switch').css('color', 'orange')
-    // console.log('helllo');
     switchMode();
   })
 
@@ -45,4 +47,11 @@ $(document).ready(function () {
     updateTemp();
     switchColor();
   }
-})
+
+  $('#current-city').change(function() {
+     var city = $('#current-city').val();
+     $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=8e6bb843aaeecb68aa5a7a85d4d34202', function(data) {
+      $('#current-temperature').text(data.main.temp)
+    })
+  })
+});
