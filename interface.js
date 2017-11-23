@@ -18,12 +18,8 @@ $(document).ready(function () {
     thermostat.resets()
     updateTemp()
   })
-  $('#powersaving-switch-on').on('click', function () {
-    thermostat.switch();
-    $('#power-saving-status').text('on')
-  })
-  $('#powersaving-switch-off').on('click', function () {
-    thermostat.switch()
-    $('#power-saving-status').text('off')
+  $("#powersaving-switch").on(function(){
+    $(".switch").toggle();
+    $(this).val( $(this).val() == 'On' ? 'Off' : 'On')
   })
 })

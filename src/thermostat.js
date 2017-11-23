@@ -26,8 +26,8 @@ Thermostat.prototype = {
     }
   },
   switch: function () {
-    if (this.powersave === true) {
-      this.powerSave = !this.powerSave
+    this.powerSave = !this.powerSave
+    if (this.powerSave === true) {
       MAX = maxSaveTemp
     } else {
       MAX = maxTemp
