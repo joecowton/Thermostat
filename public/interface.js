@@ -4,6 +4,7 @@ $(document).ready(function () {
   function updateTemp () {
 
     $('#temperature').text(thermostat.temperature);
+    $('#temperature').text(thermostat.getTemp());
     if(thermostat.checkUsage() === 0){
       $('#temperature').css('color', 'green')
     } if (thermostat.checkUsage() === 1) {
@@ -22,22 +23,26 @@ $(document).ready(function () {
   })
 
   $.get('/data', function(data) {
-    thermostat.setTemp(data.currentTemp);
-    $('#temperature').text(thermostat.getTemp());
+    if (thermostat.getTemp() == 0){
+      thermostat.setTemp(20)
+      // $('#temperature').text(thermostat.getTemp());
+      updateTemp()
+    }
+    else {
+      thermostat.setTemp(data.currentTemp);
+      // $('#temperature').text(thermostat.getTemp());
+      updateTemp()
+    }
   });
 
   $.get('/data', function(data) {
     if (data.powerSaving == null ){
       thermostat.setPowerSave(true)
     }
-    else{
-      console.log("hello")
-    thermostat.setPowerSave(data.powerSaving);
+    else {
+      thermostat.setPowerSave(data.powerSaving);
     }
-
-    switchColor();
-    console.log(thermostat.powerSave)
-
+    switchColor(); 
   });
 
   function postTemp () {
@@ -73,7 +78,6 @@ $(document).ready(function () {
   })
 
   function switchColor() {
-    // console.log(thermostat.powerSave)
     if (thermostat.powerSave == true) {
       $('#powersaving-switch').css('background-color', 'green');
     } else {

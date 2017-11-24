@@ -24,7 +24,7 @@ Thermostat.prototype = {
     return this.temperature
   },
 
-   getSwitch: function () {
+  getSwitch: function () {
     return this.powerSave
   },
 
