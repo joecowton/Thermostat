@@ -4,7 +4,6 @@ $(document).ready(function () {
   function updateTemp () {
 
     $('#temperature').text(thermostat.temperature);
-    $('#temperature').text(thermostat.getTemp());
     if(thermostat.checkUsage() === 0){
       $('#temperature').css('color', 'green')
     } if (thermostat.checkUsage() === 1) {
@@ -13,7 +12,6 @@ $(document).ready(function () {
       $('#temperature').css('color', 'red')
     }
   }
-
 
   updateTemp();
   switchColor();
@@ -25,12 +23,12 @@ $(document).ready(function () {
   $.get('/data', function(data) {
     if (thermostat.getTemp() == 0){
       thermostat.setTemp(20)
-      // $('#temperature').text(thermostat.getTemp());
+      $('#temperature').text(thermostat.getTemp());
       updateTemp()
     }
     else {
       thermostat.setTemp(data.currentTemp);
-      // $('#temperature').text(thermostat.getTemp());
+      $('#temperature').text(thermostat.getTemp());
       updateTemp()
     }
   });

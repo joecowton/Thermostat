@@ -1,4 +1,5 @@
 describe('thermostat', function () {
+  
   var thermostat
 
   beforeEach(function () {
@@ -58,7 +59,7 @@ describe('thermostat', function () {
     thermostat.temperature = 20
     expect(thermostat.checkUsage()).toEqual('medium-usage')
   })
-  
+
   it('return low-usage, when above 25', function () {
     thermostat.switch()
     thermostat.temperature = 30

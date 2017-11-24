@@ -1,4 +1,5 @@
 'use strict'
+
 const StartingTemp = 20
 const MinTemp = 10
 var maxTemp = 32
