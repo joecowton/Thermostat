@@ -17,24 +17,63 @@ $(document).ready(function () {
   updateTemp();
   switchColor();
 
+  $.get('http://api.openweathermap.org/data/2.5/weather?q=' + 'london' + '&appid=8e6bb843aaeecb68aa5a7a85d4d34202&units=metric', function(data) {
+    $('#current-temperature').text(data.main.temp)
+  })
+
+  $.get('/data', function(data) {
+    thermostat.setTemp(data.currentTemp);
+    $('#temperature').text(thermostat.getTemp());
+  });
+
+  $.get('/data', function(data) {
+    if (data.powerSaving == null ){
+      thermostat.setPowerSave(true)
+    }
+    else{
+      console.log("hello")
+    thermostat.setPowerSave(data.powerSaving);
+    }
+
+    switchColor();
+    console.log(thermostat.powerSave)
+
+  });
+
+  function postTemp () {
+    console.log(thermostat.getTemp());
+    $.post('/temperature', { temp: thermostat.getTemp() }, function(){
+    });
+  }
+
+  function postSwitch() {
+    $.post('/switch', { switch: thermostat.getSwitch() }, function(){
+    });
+  }
 
   $('#temperature-up').on('click', function () {
     thermostat.up()
     updateTemp()
+    postTemp()
   })
+
   $('#temperature-down').on('click', function () {
     thermostat.down()
     updateTemp()
+    postTemp()
   })
   $('#temperature-reset').on('click', function () {
     thermostat.resets()
     updateTemp()
+    postTemp()
   })
   $('#powersaving-switch').on('click', function() {
     switchMode();
+    postSwitch();
   })
 
   function switchColor() {
+    // console.log(thermostat.powerSave)
     if (thermostat.powerSave == true) {
       $('#powersaving-switch').css('background-color', 'green');
     } else {
@@ -49,8 +88,8 @@ $(document).ready(function () {
   }
 
   $('#current-city').change(function() {
-     var city = $('#current-city').val();
-     $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=8e6bb843aaeecb68aa5a7a85d4d34202', function(data) {
+    var city = $('#current-city').val();
+    $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=8e6bb843aaeecb68aa5a7a85d4d34202&units=metric', function(data) {
       $('#current-temperature').text(data.main.temp)
     })
   })

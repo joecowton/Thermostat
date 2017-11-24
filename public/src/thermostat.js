@@ -11,6 +11,23 @@ function Thermostat (st = StartingTemp) {
 };
 
 Thermostat.prototype = {
+
+  setPowerSave: function (state) {
+    this.powerSave = state
+  },
+
+  setTemp: function (temp) {
+    this.temperature = temp
+  },
+
+  getTemp: function () {
+    return this.temperature
+  },
+
+   getSwitch: function () {
+    return this.powerSave
+  },
+
   up: function () {
     if (this.temperature >= MAX) {
       throw ('Max temperature is exceeded')
@@ -18,16 +35,19 @@ Thermostat.prototype = {
       this.temperature += 1
     }
   },
+
   down: function () {
-    if (this.temperature === MinTemp) {
+    if (this.temperature <= MinTemp) {
       throw ("Temperature can't go below 10")
     } else {
       this.temperature -= 1
     }
   },
+
   resets: function () {
     this.temperature = StartingTemp
   },
+
   switch: function () {
     this.powerSave = !this.powerSave
     if (this.powerSave === true) {
@@ -38,9 +58,10 @@ Thermostat.prototype = {
       MAX = maxTemp
     }
   },
+
   checkUsage: function () {
-    if (this.temperature < 18) return 0;
-    if (this.temperature < 25) return 1;
-    if (this.temperature >= 25)return 2;
+    if (this.temperature < 18) return 0
+    if (this.temperature < 25) return 1
+    if (this.temperature >= 25) return 2
   }
-}
+};
